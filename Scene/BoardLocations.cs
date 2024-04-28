@@ -72,6 +72,8 @@ public partial class BoardLocations : Node2D
 		Sprite2D[] blueSpriteLocations = getAllSprites(blueNames);
 	}
 
+
+
 	 public override void _Draw()
     {
         //drawLineBetweenSprite(getAllSprites(greenNames));
@@ -161,10 +163,8 @@ public partial class BoardLocations : Node2D
 
 					}
 				}
-				catch(Exception ex)
+				catch
 				{
-					Console.WriteLine(ex);
-
 					string destination = targetName;
 					switch(destination)
 					{
@@ -193,6 +193,7 @@ public partial class BoardLocations : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		
 	}
 
 	public Sprite2D[] getAllSprites(string[] locationNames)
