@@ -219,5 +219,5 @@ position = Vector2(3312, -112)
 
 [node name="BoardCamera" type="Camera2D" parent="."]
 position = Vector2(1422, -459)
-zoom = Vector2(0.265, 0.265)
+zoom = Vector2(0.675, 0.675)
 script = ExtResource("6_3qpmf")
