@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class BoardLocations : Node2D
@@ -56,144 +57,136 @@ public partial class BoardLocations : Node2D
 								"BLUE_8",
 								"BLUE_9",
 								"BLUE_10",
-								"BLUE_11",};
+								"BLUE_11",};							
+
+		BoardCamera camera = new BoardCamera();
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Console.WriteLine("Starting...");
-
 		createConnections();
-		
-		//Get all sprite locations
-		Sprite2D[] greenSpriteLocations = getAllSprites(greenNames);
-		Sprite2D[] yellowSpriteLocations = getAllSprites(yellowNames);
-		Sprite2D[] redSpriteLocations = getAllSprites(redNames);
-		Sprite2D[] blueSpriteLocations = getAllSprites(blueNames);
 	}
 
 
 
-	 public override void _Draw()
-    {
-        //drawLineBetweenSprite(getAllSprites(greenNames));
-		//drawLineBetweenSprite(getAllSprites(yellowNames));
-        //drawLineBetweenSprite(getAllSprites(redNames));
-        //drawLineBetweenSprite(getAllSprites(blueNames));
+	// public override void _Draw()
+    // {
+    //     //drawLineBetweenSprite(getAllSprites(greenNames));
+	// 	//drawLineBetweenSprite(getAllSprites(yellowNames));
+    //     //drawLineBetweenSprite(getAllSprites(redNames));
+    //     //drawLineBetweenSprite(getAllSprites(blueNames));
 
-		foreach (var connection in connections)
-		{
-			Sprite2D source = GetNode<Sprite2D>(connection.Key);
+	// 	foreach (var connection in connections)
+	// 	{
+	// 		Sprite2D source = GetNode<Sprite2D>(connection.Key);
 
-			foreach (string targetName in connection.Value)
-			{
-				Sprite2D target = GetNode<Sprite2D>(targetName);
+	// 		foreach (string targetName in connection.Value)
+	// 		{
+	// 			Sprite2D target = GetNode<Sprite2D>(targetName);
 
-				try 
-				{
-					string origin = source.Name.ToString().Substring(0, connection.Key.IndexOf("_"));
-					string destination = targetName.Substring(0, targetName.IndexOf("_"));
+	// 			try 
+	// 			{
+	// 				string origin = source.Name.ToString().Substring(0, connection.Key.IndexOf("_"));
+	// 				string destination = targetName.Substring(0, targetName.IndexOf("_"));
 
-					if(origin == destination)
-					{
-						switch(origin)
-						{
-							case "GREEN":
-								DrawLine(source.Position, target.Position, Colors.Green, 3, true);
-								break;
+	// 				if(origin == destination)
+	// 				{
+	// 					switch(origin)
+	// 					{
+	// 						case "GREEN":
+	// 							DrawLine(source.Position, target.Position, Colors.Green, 3, true);
+	// 							break;
 
-							case "YELLOW":
-								DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
-								break;
+	// 						case "YELLOW":
+	// 							DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
+	// 							break;
 
-							case "BLUE":
-								DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
-								break;
+	// 						case "BLUE":
+	// 							DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
+	// 							break;
 
-							case "RED":
-								DrawLine(source.Position, target.Position, Colors.Red, 3, true);
-								break;
-						}
-					}
-					else
-					{
-						var midpointX = (source.Position.X + target.Position.X) / 2;
-						var midpointY = (source.Position.Y + target.Position.Y) / 2;;
+	// 						case "RED":
+	// 							DrawLine(source.Position, target.Position, Colors.Red, 3, true);
+	// 							break;
+	// 					}
+	// 				}
+	// 				else
+	// 				{
+	// 					var midpointX = (source.Position.X + target.Position.X) / 2;
+	// 					var midpointY = (source.Position.Y + target.Position.Y) / 2;;
 
-						Vector2 halfTarget = new Vector2(midpointX, midpointY);
+	// 					Vector2 halfTarget = new Vector2(midpointX, midpointY);
 
-						switch(origin)
-						{
-							case "GREEN":
-								DrawLine(source.Position, halfTarget, Colors.Green, 3, true);
-								break;
+	// 					switch(origin)
+	// 					{
+	// 						case "GREEN":
+	// 							DrawLine(source.Position, halfTarget, Colors.Green, 3, true);
+	// 							break;
 
-							case "YELLOW":
-								DrawLine(source.Position, halfTarget, Colors.Yellow, 3, true);
-								break;
+	// 						case "YELLOW":
+	// 							DrawLine(source.Position, halfTarget, Colors.Yellow, 3, true);
+	// 							break;
 
-							case "BLUE":
-								DrawLine(source.Position, halfTarget, Colors.Blue, 3, true);
-								break;
+	// 						case "BLUE":
+	// 							DrawLine(source.Position, halfTarget, Colors.Blue, 3, true);
+	// 							break;
 
-							case "RED":
-								DrawLine(source.Position, halfTarget, Colors.Red, 3, true);
-								break;
-						}
+	// 						case "RED":
+	// 							DrawLine(source.Position, halfTarget, Colors.Red, 3, true);
+	// 							break;
+	// 					}
 
-						switch(destination)
-						{
-							case "GREEN":
-								DrawLine(halfTarget, target.Position, Colors.Green, 3, true);
-								break;
+	// 					switch(destination)
+	// 					{
+	// 						case "GREEN":
+	// 							DrawLine(halfTarget, target.Position, Colors.Green, 3, true);
+	// 							break;
 
-							case "YELLOW":
-								DrawLine(halfTarget, target.Position, Colors.Yellow, 3, true);
-								break;
+	// 						case "YELLOW":
+	// 							DrawLine(halfTarget, target.Position, Colors.Yellow, 3, true);
+	// 							break;
 
-							case "BLUE":
-								DrawLine(halfTarget, target.Position, Colors.Blue, 3, true);
-								break;
+	// 						case "BLUE":
+	// 							DrawLine(halfTarget, target.Position, Colors.Blue, 3, true);
+	// 							break;
 
-							case "RED":
-								DrawLine(halfTarget, target.Position, Colors.Red, 3, true);
-								break;
-						}
+	// 						case "RED":
+	// 							DrawLine(halfTarget, target.Position, Colors.Red, 3, true);
+	// 							break;
+	// 					}
 
 
-					}
-				}
-				catch
-				{
-					string destination = targetName;
-					switch(destination)
-					{
-						case "Y1":
-							DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
-							break;
+	// 				}
+	// 			}
+	// 			catch
+	// 			{
+	// 				string destination = targetName;
+	// 				switch(destination)
+	// 				{
+	// 					case "Y1":
+	// 						DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
+	// 						break;
 
-						case"G1":
-							DrawLine(source.Position, target.Position, Colors.Green, 3, true);
-							break;
+	// 					case"G1":
+	// 						DrawLine(source.Position, target.Position, Colors.Green, 3, true);
+	// 						break;
 
-						case "B9":
-						case "B12":
-						case "B10":
-							DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
-							break;
-					}
-				}
-				
-				
-				
-			}
-		}
-    }
+	// 					case "B9":
+	// 					case "B12":
+	// 					case "B10":
+	// 						DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
+	// 						break;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+    // }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		
+		//Collision boxes
 	}
 
 	public Sprite2D[] getAllSprites(string[] locationNames)
@@ -209,35 +202,10 @@ public partial class BoardLocations : Node2D
 			NodePath currentNode = new NodePath(spriteName);
 
 			sprites[i] = GetNode<Sprite2D>(currentNode);
-			
-			Console.WriteLine($"{sprites[i].Name} is at position {sprites[i].Position}");
 		}
 
 		return sprites;
 	}
-
-	// //Pass in an array of sprite references
-	// public void drawLineBetweenSprite(Sprite2D[] sprites)
-	// {
-	// 	//For each sprite excluding the last one
-	// 	for(int i=0; i < sprites.Length-1; i++)
-	// 	{
-	// 		//Get current sprite location
-	// 		Vector2 origin = sprites[i].Position;
-	// 		//Get next sprites location
-	// 		Vector2 destination = sprites[i+1].Position;
-
-	// 		//Normalize origin
-	// 		//origin = origin.Normalized() * 100;
-	// 		//Normalize destination
-	// 		//destination = destination.Normalized() * 100;
-
-	// 		//Draw a white line from one sprite to another
-	// 		//DrawLine(origin, destination, Color.Color8(1,1,1), 1);
-	// 		DrawLine(origin, destination, Colors.White, 3, false);
-	// 	}
-
-	// }
 
 	public void createConnections()
 	{

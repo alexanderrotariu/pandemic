@@ -5,6 +5,11 @@ public partial class BoardCamera : Camera2D
 {
 	public float movementSpeed = 5.0F;
 
+	public Vector2 getCameraPosition()
+	{
+		return GetScreenCenterPosition();
+	}
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -23,10 +28,10 @@ public partial class BoardCamera : Camera2D
 		float zoomX = Zoom.X;
 		float zoomY = Zoom.Y;
 
-		Console.WriteLine(zoomX + " : " + zoomY);
+		//Console.WriteLine(zoomX + " : " + zoomY);
 
 		//Moves camera
-		if( Input.IsActionPressed("move camera") && positionDiffX > 10 && positionDiffY > 10)
+		if( Input.IsActionPressed("move camera") && positionDiffX > 5 && positionDiffY > 5)
 		{
 			//Console.WriteLine("Move camera");		
 			Position = Position.MoveToward(mousePosition, (float)delta * 500);		
@@ -53,4 +58,6 @@ public partial class BoardCamera : Camera2D
 		// //Move the camera
 		// Offset += (mousePosition - GetViewportRect().Size/2) * movementSpeed * (float)delta;
 	}
+	
+	
 }
