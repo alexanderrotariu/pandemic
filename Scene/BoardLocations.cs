@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using Godot;
 
@@ -8,56 +9,61 @@ public partial class BoardLocations : Node2D
 	Dictionary<string, List<string>> connections = new Dictionary<string, List<string>>();
 
 	//Declaring sprite names being looked for
-		string[] greenNames = { "GREEN_1",
-								"GREEN_2",
-								"GREEN_3",
-								"GREEN_4",			
-								"GREEN_5",
-								"GREEN_6",
-								"GREEN_7",
-								"GREEN_8",
-								"GREEN_9",
-								"GREEN_10",
-								"GREEN_11",
-								"GREEN_12",};
+		// string[] greenNames = { "GREEN_1",
+		// 						"GREEN_2",
+		// 						"GREEN_3",
+		// 						"GREEN_4",			
+		// 						"GREEN_5",
+		// 						"GREEN_6",
+		// 						"GREEN_7",
+		// 						"GREEN_8",
+		// 						"GREEN_9",
+		// 						"GREEN_10",
+		// 						"GREEN_11",
+		// 						"GREEN_12",};
 
-		string[] yellowNames = { "YELLOW_1",
-								 "YELLOW_2",
-								 "YELLOW_3",
-								 "YELLOW_4",			
-								 "YELLOW_5",
-								 "YELLOW_6",
-								 "YELLOW_7",
-								 "YELLOW_8",
-								 "YELLOW_9",
-								 "YELLOW_10",
-								 "YELLOW_11",
-								 "YELLOW_12",};
+		// string[] yellowNames = { "YELLOW_1",
+		// 						 "YELLOW_2",
+		// 						 "YELLOW_3",
+		// 						 "YELLOW_4",			
+		// 						 "YELLOW_5",
+		// 						 "YELLOW_6",
+		// 						 "YELLOW_7",
+		// 						 "YELLOW_8",
+		// 						 "YELLOW_9",
+		// 						 "YELLOW_10",
+		// 						 "YELLOW_11",
+		// 						 "YELLOW_12",};
 
-		string[] redNames = { 	"RED_1",
-								"RED_2",
-								"RED_3",
-								"RED_4",			
-								"RED_5",
-								"RED_6",
-								"RED_7",
-								"RED_8",
-								"RED_9",
-								"RED_10",
-								"RED_11",
-								"RED_12",};
+		// string[] redNames = { 	"RED_1",
+		// 						"RED_2",
+		// 						"RED_3",
+		// 						"RED_4",			
+		// 						"RED_5",
+		// 						"RED_6",
+		// 						"RED_7",
+		// 						"RED_8",
+		// 						"RED_9",
+		// 						"RED_10",
+		// 						"RED_11",
+		// 						"RED_12",};
 
-		string[] blueNames = {  "BLUE_1",
-								"BLUE_2",
-								"BLUE_3",
-								"BLUE_4",			
-								"BLUE_5",
-								"BLUE_6",
-								"BLUE_7",
-								"BLUE_8",
-								"BLUE_9",
-								"BLUE_10",
-								"BLUE_11",};							
+		// string[] blueNames = {  "BLUE_1",
+		// 						"BLUE_2",
+		// 						"BLUE_3",
+		// 						"BLUE_4",			
+		// 						"BLUE_5",
+		// 						"BLUE_6",
+		// 						"BLUE_7",
+		// 						"BLUE_8",
+		// 						"BLUE_9",
+		// 						"BLUE_10",
+		// 						"BLUE_11",};	
+
+		string[] canvasPaths = { "GREEN_GROUP",
+								 "YELLOW_GROUP",
+								 "RED_GROUP",
+								 "BLUE_GROUP"};
 
 		BoardCamera camera = new BoardCamera();
 
@@ -65,123 +71,147 @@ public partial class BoardLocations : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		createConnections();
+		CanvasGroup[] groups = getAllCanvasGroups(canvasPaths);
+		
+		//List<string> masterList = getAllLocations(groups);
+
+		// foreach(string locationName in masterList)
+		// {
+		// 	Console.WriteLine(locationName);
+		// }
+
+		//createConnections();
 	}
 
 
 
-	// public override void _Draw()
-    // {
-    //     //drawLineBetweenSprite(getAllSprites(greenNames));
-	// 	//drawLineBetweenSprite(getAllSprites(yellowNames));
-    //     //drawLineBetweenSprite(getAllSprites(redNames));
-    //     //drawLineBetweenSprite(getAllSprites(blueNames));
+	public override void _Draw()
+    {
+		createConnections();
+		CanvasGroup[] groups = getAllCanvasGroups(canvasPaths);
+		List<Node> locationNodes = getAllLocations(groups);
 
-	// 	foreach (var connection in connections)
-	// 	{
-	// 		Sprite2D source = GetNode<Sprite2D>(connection.Key);
+		//For each canvas group get the children contained
+		foreach(Node source in locationNodes )
+		{
+			Sprite2D spriteName = GetNode<Sprite2D>(source.GetPath());
 
-	// 		foreach (string targetName in connection.Value)
-	// 		{
-	// 			Sprite2D target = GetNode<Sprite2D>(targetName);
+			//For each sprite connected to it
+			for(int i = 0; i < connections[spriteName.Name].Count; i++)
+			{
+				Console.WriteLine("We in here");
 
-	// 			try 
-	// 			{
-	// 				string origin = source.Name.ToString().Substring(0, connection.Key.IndexOf("_"));
-	// 				string destination = targetName.Substring(0, targetName.IndexOf("_"));
+				Sprite2D targetNode = new Sprite2D();
 
-	// 				if(origin == destination)
-	// 				{
-	// 					switch(origin)
-	// 					{
-	// 						case "GREEN":
-	// 							DrawLine(source.Position, target.Position, Colors.Green, 3, true);
-	// 							break;
+				foreach(Node search in locationNodes)
+				{
+					if(search.Name == connections[spriteName.Name][i])
+					{
+						targetNode = GetNode<Sprite2D>(search.GetPath());
+					}
+				}
 
-	// 						case "YELLOW":
-	// 							DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
-	// 							break;
-
-	// 						case "BLUE":
-	// 							DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
-	// 							break;
-
-	// 						case "RED":
-	// 							DrawLine(source.Position, target.Position, Colors.Red, 3, true);
-	// 							break;
-	// 					}
-	// 				}
-	// 				else
-	// 				{
-	// 					var midpointX = (source.Position.X + target.Position.X) / 2;
-	// 					var midpointY = (source.Position.Y + target.Position.Y) / 2;;
-
-	// 					Vector2 halfTarget = new Vector2(midpointX, midpointY);
-
-	// 					switch(origin)
-	// 					{
-	// 						case "GREEN":
-	// 							DrawLine(source.Position, halfTarget, Colors.Green, 3, true);
-	// 							break;
-
-	// 						case "YELLOW":
-	// 							DrawLine(source.Position, halfTarget, Colors.Yellow, 3, true);
-	// 							break;
-
-	// 						case "BLUE":
-	// 							DrawLine(source.Position, halfTarget, Colors.Blue, 3, true);
-	// 							break;
-
-	// 						case "RED":
-	// 							DrawLine(source.Position, halfTarget, Colors.Red, 3, true);
-	// 							break;
-	// 					}
-
-	// 					switch(destination)
-	// 					{
-	// 						case "GREEN":
-	// 							DrawLine(halfTarget, target.Position, Colors.Green, 3, true);
-	// 							break;
-
-	// 						case "YELLOW":
-	// 							DrawLine(halfTarget, target.Position, Colors.Yellow, 3, true);
-	// 							break;
-
-	// 						case "BLUE":
-	// 							DrawLine(halfTarget, target.Position, Colors.Blue, 3, true);
-	// 							break;
-
-	// 						case "RED":
-	// 							DrawLine(halfTarget, target.Position, Colors.Red, 3, true);
-	// 							break;
-	// 					}
+				try 
+				{
+					string origin = source.Name.ToString().Substring(0, source.Name.ToString().IndexOf("_"));
+					string destination = targetNode.Name.ToString().Substring(0, targetNode.Name.ToString().IndexOf("_"));
 
 
-	// 				}
-	// 			}
-	// 			catch
-	// 			{
-	// 				string destination = targetName;
-	// 				switch(destination)
-	// 				{
-	// 					case "Y1":
-	// 						DrawLine(source.Position, target.Position, Colors.Yellow, 3, true);
-	// 						break;
+					if(origin == destination)
+					{
+						switch(origin)
+						{
+							case "GREEN":
+								DrawLine(spriteName.Position, targetNode.Position, Colors.Green, 3, true);
+								break;
 
-	// 					case"G1":
-	// 						DrawLine(source.Position, target.Position, Colors.Green, 3, true);
-	// 						break;
+							case "YELLOW":
+								DrawLine(spriteName.Position, targetNode.Position, Colors.Yellow, 3, true);
+								break;
 
-	// 					case "B9":
-	// 					case "B12":
-	// 					case "B10":
-	// 						DrawLine(source.Position, target.Position, Colors.Blue, 3, true);
-	// 						break;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-    // }
+							case "BLUE":
+								DrawLine(spriteName.Position, targetNode.Position, Colors.Blue, 3, true);
+								break;
+
+							case "RED":
+								DrawLine(spriteName.Position, targetNode.Position, Colors.Red, 3, true);
+								break;
+						}
+					}
+					else
+					{
+						var midpointX = (spriteName.Position.X + targetNode.Position.X) / 2;
+						var midpointY = (spriteName.Position.Y + targetNode.Position.Y) / 2;;
+
+						Vector2 halfTarget = new Vector2(midpointX, midpointY);
+
+						switch(origin)
+						{
+							case "GREEN":
+								DrawLine(spriteName.Position, halfTarget, Colors.Green, 3, true);
+								break;
+
+							case "YELLOW":
+								DrawLine(spriteName.Position, halfTarget, Colors.Yellow, 3, true);
+								break;
+
+							case "BLUE":
+								DrawLine(spriteName.Position, halfTarget, Colors.Blue, 3, true);
+								break;
+
+							case "RED":
+								DrawLine(spriteName.Position, halfTarget, Colors.Red, 3, true);
+								break;
+						}
+
+						switch(destination)
+						{
+							case "GREEN":
+								DrawLine(halfTarget, targetNode.Position, Colors.Green, 3, true);
+								break;
+
+							case "YELLOW":
+								DrawLine(halfTarget, targetNode.Position, Colors.Yellow, 3, true);
+								break;
+
+							case "BLUE":
+								DrawLine(halfTarget, targetNode.Position, Colors.Blue, 3, true);
+								break;
+
+							case "RED":
+								DrawLine(halfTarget, targetNode.Position, Colors.Red, 3, true);
+								break;
+						}
+
+
+					}
+				}
+				catch
+				{
+					Console.WriteLine("Outer Node");
+					// string destination = target.Name.ToString();
+					// switch(destination)
+					// {
+					// 	case "Y1":
+					// 		DrawLine(spriteName.Position, target.Position, Colors.Yellow, 3, true);
+					// 		break;
+
+					// 	case"G1":
+					// 		DrawLine(spriteName.Position, target.Position, Colors.Green, 3, true);
+					// 		break;
+
+					// 	case "B9":
+					// 	case "B12":
+					// 	case "B10":
+					// 		DrawLine(spriteName.Position, target.Position, Colors.Blue, 3, true);
+					// 		break;
+					// }
+				}
+					
+			}
+			
+		}
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -205,6 +235,38 @@ public partial class BoardLocations : Node2D
 		}
 
 		return sprites;
+	}
+
+	public CanvasGroup[] getAllCanvasGroups(string[] paths)
+	{
+		CanvasGroup[] canvasGroups= new CanvasGroup[paths.Length];
+		
+		for(int i = 0; i < paths.Length; i++)
+		{
+			string canvasGroupPath = paths[i];
+
+			NodePath currentNode = new NodePath(canvasGroupPath);
+
+			canvasGroups[i] = GetNode<CanvasGroup>(currentNode);
+		}
+
+		return canvasGroups;
+	} 
+
+	public List<Node> getAllLocations(CanvasGroup[] group)
+	{
+		List<Node> output = new List<Node>();
+
+		foreach (CanvasGroup cg in group)
+		{
+			var childrenList = cg.GetChildren();
+			foreach(Node child in childrenList)
+			{
+				output.Add(child);
+			}
+		}
+
+		return output;
 	}
 
 	public void createConnections()

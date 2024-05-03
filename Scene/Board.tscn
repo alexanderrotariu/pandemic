@@ -1,196 +1,181 @@
-[gd_scene load_steps=6 format=3 uid="uid://bic2fjp5mb0ji"]
+[gd_scene load_steps=5 format=3 uid="uid://bic2fjp5mb0ji"]
 
 [ext_resource type="Script" path="res://Scene/BoardLocations.cs" id="1_jqn65"]
-[ext_resource type="Script" path="res://Scene/Green_Area.cs" id="2_1j6ig"]
-[ext_resource type="PackedScene" uid="uid://bja00glsesuuo" path="res://Scene/location.tscn" id="2_dbyb7"]
+[ext_resource type="PackedScene" uid="uid://bcdifis5hxpx8" path="res://Scene/location.tscn" id="2_dbyb7"]
 [ext_resource type="Script" path="res://Scene/BoardCamera.cs" id="6_3qpmf"]
 [ext_resource type="Texture2D" uid="uid://bl5tpv61iqxjx" path="res://Assets/crosshair.png" id="7_kifqh"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_jqn65")
 
-[node name="Green_Area" type="Area2D" parent="."]
-position = Vector2(112, -768)
-script = ExtResource("2_1j6ig")
+[node name="GREEN_GROUP" type="CanvasGroup" parent="."]
 
-[node name="GREEN_ZONE" type="CollisionPolygon2D" parent="Green_Area"]
-polygon = PackedVector2Array(-63, 26, 226, 169, 711, 181, 1088, 143, 1334, 18, 1436, -57, 1292, -125, 915, -125, 367, -117, 8, -100)
+[node name="GREEN_1" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(96, -825)
 
-[node name="GREEN_1" parent="Green_Area" instance=ExtResource("2_dbyb7")]
+[node name="GREEN_2" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(336, -857)
 
-[node name="GREEN_2" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(240, -32)
+[node name="GREEN_3" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(448, -713)
 
-[node name="GREEN_3" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(352, 112)
+[node name="GREEN_4" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(540, -881)
 
-[node name="GREEN_4" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(444, -56)
+[node name="GREEN_5" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(929, -697)
 
-[node name="GREEN_5" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(833, 128)
+[node name="GREEN_6" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(960, -824)
 
-[node name="GREEN_6" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(864, 1)
+[node name="GREEN_7" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1144, -752)
 
-[node name="GREEN_7" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(1048, 73)
+[node name="GREEN_8" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1184, -888)
 
-[node name="GREEN_8" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(1088, -63)
+[node name="GREEN_9" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1440, -872)
 
-[node name="GREEN_9" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(1344, -47)
+[node name="GREEN_10" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(624, -704)
 
-[node name="GREEN_10" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(528, 121)
+[node name="GREEN_11" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(700, -816)
 
-[node name="GREEN_11" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(604, 9)
+[node name="GREEN_12" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1272, -800)
 
-[node name="GREEN_12" parent="Green_Area" instance=ExtResource("2_dbyb7")]
-position = Vector2(1176, 25)
+[node name="YELLOW_GROUP" type="CanvasGroup" parent="."]
 
-[node name="Yellow_Area" type="Area2D" parent="."]
-position = Vector2(112, -768)
+[node name="YELLOW_1" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(71, -64)
 
-[node name="YELLOW_ZONE" type="CollisionPolygon2D" parent="Yellow_Area"]
-polygon = PackedVector2Array(-57, 100, -89, 730, 325, 726, 767, 700, 1348, 697, 1346, 376, 1208, 319, 812, 311, 480, 204, 159, 195)
+[node name="YELLOW_2" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(103, -588)
 
-[node name="YELLOW_1" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(-33, 704)
+[node name="YELLOW_3" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(311, -494)
 
-[node name="YELLOW_2" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(-1, 180)
+[node name="YELLOW_4" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(457, -373)
 
-[node name="YELLOW_3" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(207, 274)
+[node name="YELLOW_5" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(254, -304)
 
-[node name="YELLOW_4" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(353, 395)
+[node name="YELLOW_6" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(690, -270)
 
-[node name="YELLOW_5" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(150, 464)
+[node name="YELLOW_7" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(569, -521)
 
-[node name="YELLOW_6" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(519, 570)
+[node name="YELLOW_8" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(498, -114)
 
-[node name="YELLOW_7" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(519, 570)
+[node name="YELLOW_9" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1097, -366)
 
-[node name="YELLOW_8" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(313, 630)
+[node name="YELLOW_10" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1225, -270)
 
-[node name="YELLOW_9" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(993, 402)
+[node name="YELLOW_11" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1364, -380)
 
-[node name="YELLOW_10" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(1121, 498)
+[node name="YELLOW_12" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1382, -142)
 
-[node name="YELLOW_11" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(1260, 388)
+[node name="RED_GROUP" type="CanvasGroup" parent="."]
 
-[node name="YELLOW_12" parent="Yellow_Area/YELLOW_ZONE" instance=ExtResource("2_dbyb7")]
-position = Vector2(1278, 626)
-
-[node name="Red_Area" type="Area2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Red_Area"]
-polygon = PackedVector2Array(1121, -580, 1108, -504, 1260, -485, 1424, -432, 1655, -324, 2085, -307, 2182, -335, 2186, -417, 2235, -576, 2176, -686, 1801, -746, 1648, -813, 1489, -752, 1343, -676, 1144, -587)
-
-[node name="RED_1" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_1" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1183, -536)
 
-[node name="RED_2" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_2" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1375, -487)
 
-[node name="RED_3" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_3" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1391, -663)
 
-[node name="RED_4" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_4" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1599, -759)
 
-[node name="RED_5" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_5" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1599, -583)
 
-[node name="RED_6" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_6" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1647, -423)
 
-[node name="RED_7" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_7" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1775, -695)
 
-[node name="RED_8" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_8" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1823, -535)
 
-[node name="RED_9" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_9" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(1935, -375)
 
-[node name="RED_10" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_10" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2144, -360)
 
-[node name="RED_11" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_11" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2192, -600)
 
-[node name="RED_12" parent="Red_Area" instance=ExtResource("2_dbyb7")]
+[node name="RED_12" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2032, -616)
 
-[node name="Blue_Area" type="Area2D" parent="."]
+[node name="BLUE_GROUP" type="CanvasGroup" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Blue_Area"]
-polygon = PackedVector2Array(2266, -598, 2205, -309, 2229, -66, 2509, -21, 2782, -24, 2864, -339, 2875, -739, 2678, -910, 2461, -918, 2269, -913, 2266, -691)
-
-[node name="BLUE_1" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_1" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2279, -486)
 
-[node name="BLUE_2" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_2" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2335, -159)
 
-[node name="BLUE_3" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_3" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2500, -334)
 
-[node name="BLUE_4" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_4" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2419, -586)
 
-[node name="BLUE_5" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_5" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2364, -728)
 
-[node name="BLUE_6" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_6" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2305, -872)
 
-[node name="BLUE_7" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_7" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2559, -831)
 
-[node name="BLUE_8" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_8" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2607, -575)
 
-[node name="BLUE_9" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_9" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2710, -349)
 
-[node name="BLUE_10" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_10" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2736, -753)
 
-[node name="BLUE_11" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_11" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2768, -622)
 
-[node name="BLUE_12" parent="Blue_Area" instance=ExtResource("2_dbyb7")]
+[node name="BLUE_12" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2727, -50)
 
-[node name="CanvasGroup" type="CanvasGroup" parent="."]
+[node name="OFFBOARD_GROUP" type="CanvasGroup" parent="."]
 position = Vector2(112, -768)
 
-[node name="B12" type="Sprite2D" parent="CanvasGroup"]
+[node name="B12" type="Sprite2D" parent="OFFBOARD_GROUP"]
 position = Vector2(-480, -112)
 
-[node name="B9" type="Sprite2D" parent="CanvasGroup"]
+[node name="B9" type="Sprite2D" parent="OFFBOARD_GROUP"]
 position = Vector2(-504, 72)
 
-[node name="B10" type="Sprite2D" parent="CanvasGroup"]
+[node name="B10" type="Sprite2D" parent="OFFBOARD_GROUP"]
 position = Vector2(-544, 376)
 
-[node name="G1" type="Sprite2D" parent="CanvasGroup"]
+[node name="G1" type="Sprite2D" parent="OFFBOARD_GROUP"]
 position = Vector2(3280, 112)
 
-[node name="Y1" type="Sprite2D" parent="CanvasGroup"]
+[node name="Y1" type="Sprite2D" parent="OFFBOARD_GROUP"]
 position = Vector2(3200, 656)
 
 [node name="BoardCamera" type="Camera2D" parent="."]
