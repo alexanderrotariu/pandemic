@@ -160,24 +160,6 @@ position = Vector2(2768, -622)
 [node name="BLUE_12" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2727, -50)
 
-[node name="OFFBOARD_GROUP" type="CanvasGroup" parent="."]
-position = Vector2(112, -768)
-
-[node name="B12" type="Sprite2D" parent="OFFBOARD_GROUP"]
-position = Vector2(-480, -112)
-
-[node name="B9" type="Sprite2D" parent="OFFBOARD_GROUP"]
-position = Vector2(-504, 72)
-
-[node name="B10" type="Sprite2D" parent="OFFBOARD_GROUP"]
-position = Vector2(-544, 376)
-
-[node name="G1" type="Sprite2D" parent="OFFBOARD_GROUP"]
-position = Vector2(3280, 112)
-
-[node name="Y1" type="Sprite2D" parent="OFFBOARD_GROUP"]
-position = Vector2(3200, 656)
-
 [node name="BoardCamera" type="Camera2D" parent="."]
 position = Vector2(1435, -479)
 zoom = Vector2(0.675, 0.675)
