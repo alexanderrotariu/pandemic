@@ -38,4 +38,16 @@ public partial class location : Sprite2D
 	public override void _Process(double delta)
 	{
 	}
+
+	public void OnMouseEnter()
+	{
+		Scale = new Vector2(2,2);
+		Console.WriteLine("Entered");
+	}
+
+	public void OnMouseExit()
+	{
+		Scale = new Vector2(1,1);
+		Console.WriteLine("Exited");
+	}
 }
