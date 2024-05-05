@@ -130,7 +130,6 @@ position = Vector2(2279, -486)
 [node name="BLUE_2" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2335, -159)
 
-
 [node name="BLUE_3" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2500, -334)
 
