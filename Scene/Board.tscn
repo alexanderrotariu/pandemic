@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scene/BoardLocations.cs" id="1_jqn65"]
 [ext_resource type="PackedScene" uid="uid://bcdifis5hxpx8" path="res://Scene/location.tscn" id="2_dbyb7"]
 [ext_resource type="Script" path="res://Scene/BoardCamera.cs" id="6_3qpmf"]
-[ext_resource type="Texture2D" uid="uid://bl5tpv61iqxjx" path="res://Assets/crosshair.png" id="7_kifqh"]
+[ext_resource type="Texture2D" path="res://Assets/crosshair.png" id="7_kifqh"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_jqn65")
