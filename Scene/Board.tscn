@@ -1,233 +1,179 @@
-[gd_scene load_steps=7 format=3 uid="uid://bic2fjp5mb0ji"]
+[gd_scene load_steps=5 format=3 uid="uid://bic2fjp5mb0ji"]
 
-[ext_resource type="Texture2D" uid="uid://bjy761nf0drd1" path="res://Assets/GREEN_SPRITE.png" id="1_c8qgf"]
 [ext_resource type="Script" path="res://Scene/BoardLocations.cs" id="1_jqn65"]
-[ext_resource type="Texture2D" uid="uid://boqn3ebx6evbf" path="res://Assets/YELLOW_SPRITE.png" id="2_r118y"]
-[ext_resource type="Texture2D" uid="uid://c1cyr326fp5tq" path="res://Assets/RED_SPRITE.png" id="3_0bpna"]
-[ext_resource type="Texture2D" uid="uid://binqpbeglfhki" path="res://Assets/BLUE_SPRITE.png" id="4_con7f"]
+[ext_resource type="PackedScene" uid="uid://bcdifis5hxpx8" path="res://Scene/location.tscn" id="2_dbyb7"]
 [ext_resource type="Script" path="res://Scene/BoardCamera.cs" id="6_3qpmf"]
+[ext_resource type="Texture2D" uid="uid://bl5tpv61iqxjx" path="res://Assets/crosshair.png" id="7_kifqh"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_jqn65")
 
-[node name="Green_Group" type="CanvasGroup" parent="."]
+[node name="GREEN_GROUP" type="CanvasGroup" parent="."]
 
-[node name="GREEN_1" type="Sprite2D" parent="Green_Group"]
-position = Vector2(112, -768)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_1" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(96, -825)
 
-[node name="GREEN_2" type="Sprite2D" parent="Green_Group"]
-position = Vector2(352, -800)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_2" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(336, -857)
 
-[node name="GREEN_3" type="Sprite2D" parent="Green_Group"]
-position = Vector2(464, -656)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_3" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(448, -713)
 
-[node name="GREEN_4" type="Sprite2D" parent="Green_Group"]
-position = Vector2(556, -824)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_4" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(540, -881)
 
-[node name="GREEN_5" type="Sprite2D" parent="Green_Group"]
-position = Vector2(945, -640)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_5" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(929, -697)
 
-[node name="GREEN_6" type="Sprite2D" parent="Green_Group"]
-position = Vector2(976, -767)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_6" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(960, -824)
 
-[node name="GREEN_7" type="Sprite2D" parent="Green_Group"]
-position = Vector2(1160, -695)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_7" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1144, -752)
 
-[node name="GREEN_8" type="Sprite2D" parent="Green_Group"]
-position = Vector2(1200, -831)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_8" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1184, -888)
 
-[node name="GREEN_9" type="Sprite2D" parent="Green_Group"]
-position = Vector2(1456, -815)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_9" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1440, -872)
 
-[node name="GREEN_10" type="Sprite2D" parent="Green_Group"]
-position = Vector2(640, -648)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_10" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(624, -704)
 
-[node name="GREEN_11" type="Sprite2D" parent="Green_Group"]
-position = Vector2(716, -759)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_11" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(700, -816)
 
-[node name="GREEN_12" type="Sprite2D" parent="Green_Group"]
-position = Vector2(1288, -743)
-texture = ExtResource("1_c8qgf")
+[node name="GREEN_12" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1272, -800)
 
-[node name="Yellow_Group" type="CanvasGroup" parent="."]
-position = Vector2(1233, -270)
+[node name="YELLOW_GROUP" type="CanvasGroup" parent="."]
 
-[node name="YELLOW_1" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-1154, 206)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_1" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(71, -64)
 
-[node name="YELLOW_2" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-1122, -318)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_2" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(103, -588)
 
-[node name="YELLOW_3" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-914, -224)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_3" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(311, -494)
 
-[node name="YELLOW_4" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-768, -103)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_4" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(457, -373)
 
-[node name="YELLOW_5" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-971, -34)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_5" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(254, -304)
 
-[node name="YELLOW_6" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-602, 72)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_6" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(690, -270)
 
-[node name="YELLOW_7" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-656, -240)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_7" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(569, -521)
 
-[node name="YELLOW_8" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-808, 132)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_8" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(498, -114)
 
-[node name="YELLOW_9" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(-128, -96)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_9" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1097, -366)
 
-[node name="YELLOW_10" type="Sprite2D" parent="Yellow_Group"]
-texture = ExtResource("2_r118y")
+[node name="YELLOW_10" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1225, -270)
 
-[node name="YELLOW_11" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(139, -110)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_11" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1364, -380)
 
-[node name="YELLOW_12" type="Sprite2D" parent="Yellow_Group"]
-position = Vector2(157, 128)
-texture = ExtResource("2_r118y")
+[node name="YELLOW_12" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1382, -142)
 
-[node name="Red_Group" type="CanvasGroup" parent="."]
+[node name="RED_GROUP" type="CanvasGroup" parent="."]
 
-[node name="RED_1" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1167, -543)
-texture = ExtResource("3_0bpna")
+[node name="RED_1" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1183, -536)
 
-[node name="RED_2" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1359, -494)
-texture = ExtResource("3_0bpna")
+[node name="RED_2" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1375, -487)
 
-[node name="RED_3" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1375, -670)
-texture = ExtResource("3_0bpna")
+[node name="RED_3" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1391, -663)
 
-[node name="RED_4" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1583, -766)
-texture = ExtResource("3_0bpna")
+[node name="RED_4" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1599, -759)
 
-[node name="RED_5" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1583, -590)
-texture = ExtResource("3_0bpna")
+[node name="RED_5" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1599, -583)
 
-[node name="RED_6" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1631, -430)
-texture = ExtResource("3_0bpna")
+[node name="RED_6" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1647, -423)
 
-[node name="RED_7" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1759, -702)
-texture = ExtResource("3_0bpna")
+[node name="RED_7" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1775, -695)
 
-[node name="RED_8" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1807, -542)
-texture = ExtResource("3_0bpna")
+[node name="RED_8" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1823, -535)
 
-[node name="RED_9" type="Sprite2D" parent="Red_Group"]
-position = Vector2(1919, -382)
-texture = ExtResource("3_0bpna")
+[node name="RED_9" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(1935, -375)
 
-[node name="RED_10" type="Sprite2D" parent="Red_Group"]
-position = Vector2(2128, -367)
-texture = ExtResource("3_0bpna")
+[node name="RED_10" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2144, -360)
 
-[node name="RED_11" type="Sprite2D" parent="Red_Group"]
-position = Vector2(2176, -607)
-texture = ExtResource("3_0bpna")
+[node name="RED_11" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2192, -600)
 
-[node name="RED_12" type="Sprite2D" parent="Red_Group"]
-position = Vector2(2016, -623)
-texture = ExtResource("3_0bpna")
+[node name="RED_12" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2032, -616)
 
-[node name="Blue_Group" type="CanvasGroup" parent="."]
+[node name="BLUE_GROUP" type="CanvasGroup" parent="."]
 
-[node name="BLUE_1" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_1" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2279, -486)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_2" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_2" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2335, -159)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_3" type="Sprite2D" parent="Blue_Group"]
+
+[node name="BLUE_3" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2500, -334)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_4" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_4" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2419, -586)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_5" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_5" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2364, -728)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_6" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_6" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2305, -872)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_7" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_7" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2559, -831)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_8" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_8" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2607, -575)
-texture = ExtResource("4_con7f")
 
-[node name="BLUE_9" type="Sprite2D" parent="Blue_Group"]
-position = Vector2(2711, -348)
-texture = ExtResource("4_con7f")
+[node name="BLUE_9" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2710, -349)
 
-[node name="BLUE_10" type="Sprite2D" parent="Blue_Group"]
-position = Vector2(2735, -751)
-texture = ExtResource("4_con7f")
+[node name="BLUE_10" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2736, -753)
 
-[node name="BLUE_11" type="Sprite2D" parent="Blue_Group"]
-position = Vector2(2767, -623)
-texture = ExtResource("4_con7f")
+[node name="BLUE_11" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
+position = Vector2(2768, -622)
 
-[node name="BLUE_12" type="Sprite2D" parent="Blue_Group"]
+[node name="BLUE_12" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
 position = Vector2(2727, -50)
-texture = ExtResource("4_con7f")
-
-[node name="OffMap_Group" type="CanvasGroup" parent="."]
-
-[node name="B12" type="Sprite2D" parent="OffMap_Group"]
-position = Vector2(-368, -880)
-
-[node name="B9" type="Sprite2D" parent="OffMap_Group"]
-position = Vector2(-392, -696)
-
-[node name="B10" type="Sprite2D" parent="OffMap_Group"]
-position = Vector2(-432, -392)
-
-[node name="G1" type="Sprite2D" parent="OffMap_Group"]
-position = Vector2(3392, -656)
-
-[node name="Y1" type="Sprite2D" parent="OffMap_Group"]
-position = Vector2(3312, -112)
 
 [node name="BoardCamera" type="Camera2D" parent="."]
-position = Vector2(1422, -459)
+position = Vector2(1435, -479)
 zoom = Vector2(0.675, 0.675)
+position_smoothing_enabled = true
 script = ExtResource("6_3qpmf")
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="BoardCamera"]
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("7_kifqh")
+expand_mode = 1
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
