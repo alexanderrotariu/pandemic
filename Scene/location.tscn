@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scene/location.cs" id="1_43nv0"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_af7sy"]
-size = Vector2(74, 70)
+[sub_resource type="CircleShape2D" id="CircleShape2D_8h8pg"]
+radius = 27.0
 
 [node name="Location" type="Sprite2D"]
 script = ExtResource("1_43nv0")
@@ -12,7 +12,8 @@ script = ExtResource("1_43nv0")
 input_pickable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("RectangleShape2D_af7sy")
+shape = SubResource("CircleShape2D_8h8pg")
 
+[connection signal="input_event" from="StaticBody2D" to="." method="OnInputEvent"]
 [connection signal="mouse_entered" from="StaticBody2D" to="." method="OnMouseEnter"]
 [connection signal="mouse_exited" from="StaticBody2D" to="." method="OnMouseExit"]

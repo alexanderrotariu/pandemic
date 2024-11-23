@@ -1,168 +1,222 @@
-[gd_scene load_steps=5 format=3 uid="uid://bic2fjp5mb0ji"]
+[gd_scene load_steps=12 format=3 uid="uid://bic2fjp5mb0ji"]
 
 [ext_resource type="Script" path="res://Scene/BoardLocations.cs" id="1_jqn65"]
-[ext_resource type="PackedScene" uid="uid://bcdifis5hxpx8" path="res://Scene/location.tscn" id="2_dbyb7"]
+[ext_resource type="PackedScene" uid="uid://bcdifis5hxpx8" path="res://Scene/Location.tscn" id="2_dbyb7"]
+[ext_resource type="Texture2D" uid="uid://bjy761nf0drd1" path="res://Assets/GREEN_SPRITE.png" id="3_h23st"]
+[ext_resource type="Texture2D" uid="uid://boqn3ebx6evbf" path="res://Assets/YELLOW_SPRITE.png" id="5_gedu7"]
 [ext_resource type="Script" path="res://Scene/BoardCamera.cs" id="6_3qpmf"]
-[ext_resource type="Texture2D" path="res://Assets/crosshair.png" id="7_kifqh"]
+[ext_resource type="Texture2D" uid="uid://c1cyr326fp5tq" path="res://Assets/RED_SPRITE.png" id="6_xekck"]
+[ext_resource type="Texture2D" uid="uid://bl5tpv61iqxjx" path="res://Assets/crosshair.png" id="7_kifqh"]
+[ext_resource type="PackedScene" uid="uid://cugv8acisft2n" path="res://Scene/Player.tscn" id="7_us2es"]
+[ext_resource type="Texture2D" uid="uid://binqpbeglfhki" path="res://Assets/BLUE_SPRITE.png" id="7_ydve5"]
+[ext_resource type="Texture2D" uid="uid://b8iu04olkwje" path="res://Assets/image.png" id="9_1kt1y"]
+[ext_resource type="Texture2D" uid="uid://bwf8mjjq2bpsn" path="res://Assets/player1.png" id="10_g3cr4"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_jqn65")
 
-[node name="GREEN_GROUP" type="CanvasGroup" parent="."]
+[node name="BLUE_CITIES" type="CanvasGroup" parent="."]
 
-[node name="GREEN_1" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(96, -825)
+[node name="SanFrancisco" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-1197, -238)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_2" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(336, -857)
+[node name="Chicago" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-951, -292)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_3" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(448, -713)
+[node name="Montreal" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-748, -298)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_4" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(540, -881)
+[node name="NewYork" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-595, -281)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_5" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(929, -697)
+[node name="London" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-226, -371)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_6" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(960, -824)
+[node name="Madrid" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-250, -222)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_7" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1144, -752)
+[node name="Paris" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-78, -297)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_8" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1184, -888)
+[node name="Milan" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(58, -326)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_9" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1440, -872)
+[node name="StPetersburg" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(191, -432)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_10" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(624, -704)
+[node name="Washington" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-660, -190)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_11" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(700, -816)
+[node name="Atlanta" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-868, -181)
+texture = ExtResource("3_h23st")
 
-[node name="GREEN_12" parent="GREEN_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1272, -800)
+[node name="Essen" parent="BLUE_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-21, -398)
+texture = ExtResource("3_h23st")
 
-[node name="YELLOW_GROUP" type="CanvasGroup" parent="."]
+[node name="YELLOW_CITIES" type="CanvasGroup" parent="."]
 
-[node name="YELLOW_1" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(71, -64)
+[node name="Miami" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-745, -54)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_2" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(103, -588)
+[node name="Bogota" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-762, 95)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_3" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(311, -494)
+[node name="Lima" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-835, 259)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_4" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(457, -373)
+[node name="Santiago" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-809, 433)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_5" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(254, -304)
+[node name="BuenosAires" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-599, 402)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_6" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(690, -270)
+[node name="SaoPaulo" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-483, 288)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_7" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(569, -521)
+[node name="Lagos" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-96, 70)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_8" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(498, -114)
+[node name="Khartoum" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(158, 44)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_9" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1097, -366)
+[node name="Kinshasa" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(25, 180)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_10" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1225, -270)
+[node name="Johannesburg" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(144, 332)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_11" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1364, -380)
+[node name="LosAngeles" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-1158, -85)
+texture = ExtResource("5_gedu7")
 
-[node name="YELLOW_12" parent="YELLOW_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1382, -142)
+[node name="MexicoCity" parent="YELLOW_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-973, -29)
+texture = ExtResource("5_gedu7")
 
-[node name="RED_GROUP" type="CanvasGroup" parent="."]
+[node name="BLACK_CITIES" type="CanvasGroup" parent="."]
 
-[node name="RED_1" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1183, -536)
+[node name="Moscow" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(303, -330)
+texture = ExtResource("6_xekck")
 
-[node name="RED_2" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1375, -487)
+[node name="Istanbul" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(143, -238)
+texture = ExtResource("6_xekck")
 
-[node name="RED_3" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1391, -663)
+[node name="Tehran" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(436, -253)
+texture = ExtResource("6_xekck")
 
-[node name="RED_4" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1599, -759)
+[node name="Delhi" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(618, -152)
+texture = ExtResource("6_xekck")
 
-[node name="RED_5" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1599, -583)
+[node name="Kolkata" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(758, -114)
+texture = ExtResource("6_xekck")
 
-[node name="RED_6" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1647, -423)
+[node name="Chennai" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(644, 87)
+texture = ExtResource("6_xekck")
 
-[node name="RED_7" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1775, -695)
+[node name="Mumbai" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(492, 3)
+texture = ExtResource("6_xekck")
 
-[node name="RED_8" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1823, -535)
+[node name="Karachi" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(475, -110)
+texture = ExtResource("6_xekck")
 
-[node name="RED_9" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(1935, -375)
+[node name="Baghdad" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(285, -159)
+texture = ExtResource("6_xekck")
 
-[node name="RED_10" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2144, -360)
+[node name="Riyadh" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(305, -21)
+texture = ExtResource("6_xekck")
 
-[node name="RED_11" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2192, -600)
+[node name="Algiers" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(-36, -137)
+texture = ExtResource("6_xekck")
 
-[node name="RED_12" parent="RED_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2032, -616)
+[node name="Cairo" parent="BLACK_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(115, -109)
+texture = ExtResource("6_xekck")
 
-[node name="BLUE_GROUP" type="CanvasGroup" parent="."]
+[node name="RED_CITIES" type="CanvasGroup" parent="."]
 
-[node name="BLUE_1" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2279, -486)
+[node name="Beijing" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(871, -290)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_2" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2335, -159)
+[node name="Seoul" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1050, -296)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_3" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2500, -334)
+[node name="Tokyo" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1191, -237)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_4" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2419, -586)
+[node name="Shanghai" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(882, -182)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_5" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2364, -728)
+[node name="HongKong" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(900, -54)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_6" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2305, -872)
+[node name="Taipei" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1062, -74)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_7" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2559, -831)
+[node name="Osaka" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1203, -120)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_8" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2607, -575)
+[node name="Bangkok" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(788, 13)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_9" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2710, -349)
+[node name="Jakarta" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(781, 220)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_10" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2736, -753)
+[node name="HoChiMinhCity" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(909, 120)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_11" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2768, -622)
+[node name="Manila" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1106, 113)
+texture = ExtResource("7_ydve5")
 
-[node name="BLUE_12" parent="BLUE_GROUP" instance=ExtResource("2_dbyb7")]
-position = Vector2(2727, -50)
+[node name="Sydney" parent="RED_CITIES" instance=ExtResource("2_dbyb7")]
+position = Vector2(1222, 423)
+texture = ExtResource("7_ydve5")
 
 [node name="BoardCamera" type="Camera2D" parent="."]
-position = Vector2(1435, -479)
-zoom = Vector2(0.675, 0.675)
+zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 script = ExtResource("6_3qpmf")
 metadata/_edit_group_ = true
@@ -176,3 +230,12 @@ texture = ExtResource("7_kifqh")
 expand_mode = 1
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
+
+[node name="Player" parent="." instance=ExtResource("7_us2es")]
+texture = ExtResource("10_g3cr4")
+
+[node name="Image" type="Sprite2D" parent="."]
+visible = false
+show_behind_parent = true
+scale = Vector2(2.67537, 2.05109)
+texture = ExtResource("9_1kt1y")

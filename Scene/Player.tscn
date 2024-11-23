@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cugv8acisft2n"]
+
+[ext_resource type="Script" path="res://Scene/Player.cs" id="1_7ligd"]
+[ext_resource type="Texture2D" uid="uid://binqpbeglfhki" path="res://Assets/BLUE_SPRITE.png" id="2_player"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h31hu"]
+radius = 15.0
+height = 40.0
+
+[node name="Player" type="Sprite2D"]
+scale = Vector2(2, 2)
+texture = ExtResource("2_player")
+script = ExtResource("1_7ligd")
+
+[node name="PlayerHitBox" type="CharacterBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
+shape = SubResource("CapsuleShape2D_h31hu")
+
+[connection signal="mouse_entered" from="PlayerHitBox" to="." method="OnMouseEnter"]
+[connection signal="mouse_exited" from="PlayerHitBox" to="." method="OnMouseExit"]

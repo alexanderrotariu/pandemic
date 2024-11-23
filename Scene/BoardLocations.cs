@@ -1,330 +1,457 @@
+using Godot;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
-using Godot;
+
+public class City
+{
+    public string Name { get; set; }
+    public Vector2 Position { get; set; }
+    public DiseaseType Region { get; set; }
+    public List<string> ConnectedCities { get; set; }
+    public int DiseaseCount { get; set; }
+
+    public City(string name, Vector2 position, DiseaseType region)
+    {
+        Name = name;
+        Position = position;
+        Region = region;
+        ConnectedCities = new List<string>();
+        DiseaseCount = 0;
+    }
+}
+
+public enum DiseaseType
+{
+    Blue,    // North America & Europe
+    Yellow,  // South America & Africa
+    Black,   // Asia/Middle East
+    Red      // East Asia & Oceania
+}
 
 public partial class BoardLocations : Node2D
 {
-	Dictionary<string, List<string>> connections = new Dictionary<string, List<string>>();
-
-	//Declaring sprite names being looked for
-		// string[] greenNames = { "GREEN_1",
-		// 						"GREEN_2",
-		// 						"GREEN_3",
-		// 						"GREEN_4",			
-		// 						"GREEN_5",
-		// 						"GREEN_6",
-		// 						"GREEN_7",
-		// 						"GREEN_8",
-		// 						"GREEN_9",
-		// 						"GREEN_10",
-		// 						"GREEN_11",
-		// 						"GREEN_12",};
-
-		// string[] yellowNames = { "YELLOW_1",
-		// 						 "YELLOW_2",
-		// 						 "YELLOW_3",
-		// 						 "YELLOW_4",			
-		// 						 "YELLOW_5",
-		// 						 "YELLOW_6",
-		// 						 "YELLOW_7",
-		// 						 "YELLOW_8",
-		// 						 "YELLOW_9",
-		// 						 "YELLOW_10",
-		// 						 "YELLOW_11",
-		// 						 "YELLOW_12",};
-
-		// string[] redNames = { 	"RED_1",
-		// 						"RED_2",
-		// 						"RED_3",
-		// 						"RED_4",			
-		// 						"RED_5",
-		// 						"RED_6",
-		// 						"RED_7",
-		// 						"RED_8",
-		// 						"RED_9",
-		// 						"RED_10",
-		// 						"RED_11",
-		// 						"RED_12",};
-
-		// string[] blueNames = {  "BLUE_1",
-		// 						"BLUE_2",
-		// 						"BLUE_3",
-		// 						"BLUE_4",			
-		// 						"BLUE_5",
-		// 						"BLUE_6",
-		// 						"BLUE_7",
-		// 						"BLUE_8",
-		// 						"BLUE_9",
-		// 						"BLUE_10",
-		// 						"BLUE_11",};	
-
-		string[] canvasPaths = { "GREEN_GROUP",
-								 "YELLOW_GROUP",
-								 "RED_GROUP",
-								 "BLUE_GROUP"};
-
-		BoardCamera camera = new BoardCamera();
+    private Dictionary<string, City> cities;
+    private Dictionary<DiseaseType, Color> diseaseColors;
+    
+    // Cache for optimizing drawing operations
+    private List<(Vector2 start, Vector2 end, Color color)> connectionLines;
+    private bool needsConnectionUpdate = true;
 
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		CanvasGroup[] groups = getAllCanvasGroups(canvasPaths);
-		
-		//List<string> masterList = getAllLocations(groups);
-
-		// foreach(string locationName in masterList)
-		// {
-		// 	Console.WriteLine(locationName);
-		// }
-
-		//createConnections();
-	}
-
-
-
-	public override void _Draw()
+    public override void _Ready()
     {
-		createConnections();
-		CanvasGroup[] groups = getAllCanvasGroups(canvasPaths);
-		List<Node> locationNodes = getAllLocations(groups);
-
-		//For each canvas group get the children contained
-		foreach(Node source in locationNodes )
-		{
-			Sprite2D spriteName = GetNode<Sprite2D>(source.GetPath());
-
-			//For each sprite connected to it
-			for(int i = 0; i < connections[spriteName.Name].Count; i++)
-			{
-				Console.WriteLine("We in here");
-
-				Sprite2D targetNode = new Sprite2D();
-
-				foreach(Node search in locationNodes)
-				{
-					if(search.Name == connections[spriteName.Name][i])
-					{
-						targetNode = GetNode<Sprite2D>(search.GetPath());
-					}
-				}
-
-				try 
-				{
-					string origin = source.Name.ToString().Substring(0, source.Name.ToString().IndexOf("_"));
-					string destination = targetNode.Name.ToString().Substring(0, targetNode.Name.ToString().IndexOf("_"));
-
-
-					if(origin == destination)
-					{
-						switch(origin)
-						{
-							case "GREEN":
-								DrawLine(spriteName.Position, targetNode.Position, Colors.Green, 3, true);
-								break;
-
-							case "YELLOW":
-								DrawLine(spriteName.Position, targetNode.Position, Colors.Yellow, 3, true);
-								break;
-
-							case "BLUE":
-								DrawLine(spriteName.Position, targetNode.Position, Colors.Blue, 3, true);
-								break;
-
-							case "RED":
-								DrawLine(spriteName.Position, targetNode.Position, Colors.Red, 3, true);
-								break;
-						}
-					}
-					else
-					{
-						var midpointX = (spriteName.Position.X + targetNode.Position.X) / 2;
-						var midpointY = (spriteName.Position.Y + targetNode.Position.Y) / 2;;
-
-						Vector2 halfTarget = new Vector2(midpointX, midpointY);
-
-						switch(origin)
-						{
-							case "GREEN":
-								DrawLine(spriteName.Position, halfTarget, Colors.Green, 3, true);
-								break;
-
-							case "YELLOW":
-								DrawLine(spriteName.Position, halfTarget, Colors.Yellow, 3, true);
-								break;
-
-							case "BLUE":
-								DrawLine(spriteName.Position, halfTarget, Colors.Blue, 3, true);
-								break;
-
-							case "RED":
-								DrawLine(spriteName.Position, halfTarget, Colors.Red, 3, true);
-								break;
-						}
-
-						switch(destination)
-						{
-							case "GREEN":
-								DrawLine(halfTarget, targetNode.Position, Colors.Green, 3, true);
-								break;
-
-							case "YELLOW":
-								DrawLine(halfTarget, targetNode.Position, Colors.Yellow, 3, true);
-								break;
-
-							case "BLUE":
-								DrawLine(halfTarget, targetNode.Position, Colors.Blue, 3, true);
-								break;
-
-							case "RED":
-								DrawLine(halfTarget, targetNode.Position, Colors.Red, 3, true);
-								break;
-						}
-
-
-					}
-				}
-				catch
-				{
-					Console.WriteLine("Outer Node");
-					// string destination = target.Name.ToString();
-					// switch(destination)
-					// {
-					// 	case "Y1":
-					// 		DrawLine(spriteName.Position, target.Position, Colors.Yellow, 3, true);
-					// 		break;
-
-					// 	case"G1":
-					// 		DrawLine(spriteName.Position, target.Position, Colors.Green, 3, true);
-					// 		break;
-
-					// 	case "B9":
-					// 	case "B12":
-					// 	case "B10":
-					// 		DrawLine(spriteName.Position, target.Position, Colors.Blue, 3, true);
-					// 		break;
-					// }
-				}
-					
-			}
-			
-		}
+        InitializeColors();
+        InitializeCities();
+        CreateConnections();
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		//Collision boxes
-	}
+    private void InitializeColors()
+    {
+        diseaseColors = new Dictionary<DiseaseType, Color>
+        {
+            { DiseaseType.Blue, Colors.Blue },
+            { DiseaseType.Yellow, Colors.Yellow },
+            { DiseaseType.Black, Colors.Black },
+            { DiseaseType.Red, Colors.Red }
+        };
+    }
 
-	public Sprite2D[] getAllSprites(string[] locationNames)
-	{
-        //Declaring an array of Sprite2D's 
-		Sprite2D[] sprites = new Sprite2D[locationNames.Length];
+    private void InitializeCities()
+    {
+        cities = new Dictionary<string, City>();
 
-		
-		for (int i=0; i < locationNames.Length; i++)
-		{
-			string spriteName = locationNames[i];
+        // Get all city nodes from the scene tree
+        var groups = new[] { "BLUE_CITIES", "YELLOW_CITIES", "BLACK_CITIES", "RED_CITIES" };
+        foreach (var groupPath in groups)
+        {
+            var group = GetNode<CanvasGroup>(groupPath);
+            var diseaseType = GetDiseaseTypeFromGroup(groupPath);
 
-			NodePath currentNode = new NodePath(spriteName);
+            foreach (Node cityNode in group.GetChildren())
+            {
+                var sprite = cityNode as Sprite2D;
+                if (sprite != null)
+                {
+                    cities.Add(cityNode.Name, new City(
+                        cityNode.Name,
+                        sprite.Position,
+                        diseaseType
+                    ));
+                }
+            }
+        }
+    }
 
-			sprites[i] = GetNode<Sprite2D>(currentNode);
-		}
+    public override void _Process(double delta)
+    {
+        if (needsConnectionUpdate)
+        {
+            UpdateConnectionLines();
+            needsConnectionUpdate = false;
+        }
+        QueueRedraw();
+    }
 
-		return sprites;
-	}
+    public override void _Draw()
+    {
+        if (connectionLines == null) return;
 
-	public CanvasGroup[] getAllCanvasGroups(string[] paths)
-	{
-		CanvasGroup[] canvasGroups= new CanvasGroup[paths.Length];
-		
-		for(int i = 0; i < paths.Length; i++)
-		{
-			string canvasGroupPath = paths[i];
+        foreach (var line in connectionLines)
+        {
+            DrawLine(line.start, line.end, line.color, 3, true);
+        }
+    }
 
-			NodePath currentNode = new NodePath(canvasGroupPath);
+    private void UpdateConnectionLines()
+    {
+        connectionLines = new List<(Vector2, Vector2, Color)>();
 
-			canvasGroups[i] = GetNode<CanvasGroup>(currentNode);
-		}
+        foreach (var city in cities.Values)
+        {
+            foreach (var connectedCityName in city.ConnectedCities)
+            {
+                if (cities.TryGetValue(connectedCityName, out var connectedCity))
+                {
+                    // Calculate the direct path vector
+                    Vector2 directPath = connectedCity.Position - city.Position;
+                    Vector2 start = city.Position;
+                    Vector2 end = connectedCity.Position;
 
-		return canvasGroups;
-	} 
+                    // If the path is too long (crosses too much of the board), flip it
+                    if (Math.Abs(directPath.X) > 1200) // Threshold for when to flip
+                    {
+                        // Flip the X coordinates
+                        if (start.X < 0)
+                        {
+                            start.X = start.X - 800; // Push further left
+                            end.X = end.X + 800;     // Push further right
+                        }
+                        else
+                        {
+                            start.X = start.X + 800; // Push further right
+                            end.X = end.X - 800;     // Push further left
+                        }
+                    }
 
-	public List<Node> getAllLocations(CanvasGroup[] group)
-	{
-		List<Node> output = new List<Node>();
+                    // Handle cities from different regions
+                    if (city.Region != connectedCity.Region)
+                    {
+                        var midpoint = (start + end) / 2;
+                        connectionLines.Add((
+                            start,
+                            midpoint,
+                            diseaseColors[city.Region]
+                        ));
+                        connectionLines.Add((
+                            midpoint,
+                            end,
+                            diseaseColors[connectedCity.Region]
+                        ));
+                    }
+                    // Cities from same region
+                    else
+                    {
+                        connectionLines.Add((
+                            start,
+                            end,
+                            diseaseColors[city.Region]
+                        ));
+                    }
+                }
+            }
+        }
+    }
 
-		foreach (CanvasGroup cg in group)
-		{
-			var childrenList = cg.GetChildren();
-			foreach(Node child in childrenList)
-			{
-				output.Add(child);
-			}
-		}
+    private DiseaseType GetDiseaseTypeFromGroup(string groupPath)
+    {
+        return groupPath switch
+        {
+            "BLUE_CITIES" => DiseaseType.Blue,     // The "BLUE_GROUP" in your scene actually represents Red cities
+            "YELLOW_CITIES" => DiseaseType.Yellow,
+            "BLACK_CITIES" => DiseaseType.Black,    // The "RED_GROUP" represents Black cities
+            "RED_CITIES" => DiseaseType.Red,   // The "GREEN_GROUP" represents Blue cities
+            _ => throw new ArgumentException($"Unknown group: {groupPath}")
+        };
+    }
 
-		return output;
-	}
+    private void CreateConnections()
+    {
+        CreateBlueRegionConnections();      // North America & Europe (GREEN_GROUP)
+        CreateYellowRegionConnections();    // South America & Africa (YELLOW_GROUP)
+        CreateRedRegionConnections();       // East Asia & Oceania (BLUE_GROUP)
+        CreateBlackRegionConnections();     // Middle East *
+        
+        ValidateConnections();
+        needsConnectionUpdate = true;
+    }
 
-	public void createConnections()
-	{
-		//GREEN CONNECTIONS
-		connections.Add("GREEN_1", new List<string> { "GREEN_2", "YELLOW_2", "B9", "B12" }); //CONNECTS ACROSS THE MAP TO BLUE_12 AND BLUE_9
-		connections.Add("GREEN_2", new List<string> { "YELLOW_2", "YELLOW_3", "GREEN_3", "GREEN_1", "GREEN_4" });
-		connections.Add("GREEN_3", new List<string> { "GREEN_10", "YELLOW_7", "GREEN_2" });
-		connections.Add("GREEN_4", new List<string> { "GREEN_2", "GREEN_10", "GREEN_11" });
-		connections.Add("GREEN_5", new List<string> { "GREEN_6", "RED_1", "GREEN_11", "YELLOW_6" });
-		connections.Add("GREEN_6", new List<string> { "GREEN_5", "GREEN_7", "GREEN_11" });
-		connections.Add("GREEN_7", new List<string> { "RED_1", "GREEN_5", "GREEN_6", "GREEN_8", "GREEN_12" });
-		connections.Add("GREEN_8", new List<string> { "GREEN_6", "GREEN_7", "GREEN_9", "GREEN_12" });
-		connections.Add("GREEN_9", new List<string> { "GREEN_8", "RED_3", "RED_4" });
-		connections.Add("GREEN_10", new List<string> { "GREEN_3", "YELLOW_7", "GREEN_4", "GREEN_11" });
-		connections.Add("GREEN_11", new List<string> { "GREEN_10", "GREEN_4", "GREEN_5", "GREEN_6" });
-		connections.Add("GREEN_12", new List<string> { "GREEN_8", "GREEN_7", "RED_3" });
+    private void AddBidirectionalConnection(string city1, string city2)
+    {
+        if (!cities.ContainsKey(city1) || !cities.ContainsKey(city2))
+        {
+            GD.PrintErr($"Attempted to connect nonexistent cities: {city1} - {city2}");
+            return;
+        }
 
-		//YELLOW CONNECTIONS
-		connections.Add("YELLOW_1", new List<string> { "YELLOW_5" });		
-		connections.Add("YELLOW_2", new List<string> { "YELLOW_3", "GREEN_1", "GREEN_2", "B10" }); //CONNECTS ACROSS THE MAP TO BLUE_10
-		connections.Add("YELLOW_3", new List<string> { "YELLOW_2", "YELLOW_4", "YELLOW_5", "YELLOW_7", "GREEN_2" });
-		connections.Add("YELLOW_4", new List<string> { "YELLOW_3", "YELLOW_5", "YELLOW_6", "YELLOW_7", "YELLOW_8" });
-		connections.Add("YELLOW_5", new List<string> { "YELLOW_1", "YELLOW_3", "YELLOW_4" });
-		connections.Add("YELLOW_6", new List<string> { "YELLOW_4", "YELLOW_8", "YELLOW_9", "GREEN_5" });
-		connections.Add("YELLOW_7", new List<string> { "YELLOW_3", "YELLOW_4", "GREEN_3", "GREEN_10" });
-		connections.Add("YELLOW_8", new List<string> { "YELLOW_6", "YELLOW_4" });
-		connections.Add("YELLOW_9", new List<string> { "YELLOW_6", "YELLOW_10", "YELLOW_11" });
-		connections.Add("YELLOW_10", new List<string> { "YELLOW_9", "YELLOW_11", "YELLOW_12" });
-		connections.Add("YELLOW_11", new List<string> { "YELLOW_9", "YELLOW_10", "YELLOW_12", "RED_2" });
-		connections.Add("YELLOW_12", new List<string> { "YELLOW_10", "YELLOW_11" });
+        cities[city1].ConnectedCities.Add(city2);
+        cities[city2].ConnectedCities.Add(city1);
+    }
 
-		//BLUE CONNECTIONS
-		connections.Add("BLUE_1", new List<string> { "RED_10", "RED_11", "BLUE_2", "BLUE_4" });
-		connections.Add("BLUE_2", new List<string> { "RED_10", "BLUE_3", "BLUE_12" });
-		connections.Add("BLUE_3", new List<string> { "BLUE_1", "BLUE_2", "BLUE_4", "BLUE_9" });
-		connections.Add("BLUE_4", new List<string> { "RED_11", "BLUE_5", "BLUE_8", "BLUE_9", "BLUE_3", "BLUE_1" });
-		connections.Add("BLUE_5", new List<string> { "BLUE_4", "BLUE_6", "BLUE_7", "BLUE_8", "BLUE_10"  });
-		connections.Add("BLUE_6", new List<string> { "BLUE_5", "BLUE_7" });
-		connections.Add("BLUE_7", new List<string> { "BLUE_5", "BLUE_6", "BLUE_10" });
-		connections.Add("BLUE_8", new List<string> { "BLUE_4", "BLUE_5", "BLUE_9", "BLUE_11" });
-		connections.Add("BLUE_9", new List<string> { "BLUE_3", "BLUE_4", "BLUE_8", "BLUE_12", "G1" });
-		connections.Add("BLUE_10", new List<string> { "BLUE_5", "BLUE_7", "BLUE_11", "G1" });
-		connections.Add("BLUE_11", new List<string> { "BLUE_8", "BLUE_10" });
-		connections.Add("BLUE_12", new List<string> { "BLUE_2", "BLUE_9", "Y1" });
+    private void CreateBlueRegionConnections()
+    {
+        var blueConnections = new (string, string)[]
+        {
+            // Blue City Connections
+            ("SanFrancisco", "Chicago"),
+            //("SanFrancisco", "Manila"),
+            //("SanFrancisco", "Tokyo"),
+            ("SanFrancisco", "LosAngeles"),
 
-		//RED CONNECTIONS
-		connections.Add("RED_1", new List<string> { "GREEN_5", "GREEN_7", "RED_3", "RED_2" });
-		connections.Add("RED_2", new List<string> { "RED_1", "RED_3", "RED_5", "RED_6", "YELLOW_11" });
-		connections.Add("RED_3", new List<string> { "GREEN_12", "GREEN_9", "RED_1", "RED_2", "RED_5", "RED_4" });
-		connections.Add("RED_4", new List<string> { "GREEN_9", "RED_3", "RED_7" });
-		connections.Add("RED_5", new List<string> { "RED_3", "RED_2", "RED_6", "RED_8", "RED_7" });
-		connections.Add("RED_6", new List<string> { "RED_2", "RED_5", "RED_8" });
-		connections.Add("RED_7", new List<string> { "RED_5", "RED_4", "RED_8", "RED_12" });
-		connections.Add("RED_8", new List<string> { "RED_5", "RED_6", "RED_7", "RED_9", "RED_12" });
-		connections.Add("RED_9", new List<string> { "RED_10", "RED_12", "RED_8" });
-		connections.Add("RED_10", new List<string> { "BLUE_2", "BLUE_1", "RED_11", "RED_12", "RED_9" });
-		connections.Add("RED_11", new List<string> { "BLUE_4", "BLUE_1", "RED_10", "RED_12" });
-		connections.Add("RED_12", new List<string> { "RED_11", "RED_10", "RED_9", "RED_8", "RED_7" });
-	}		
+            ("Chicago", "Montreal"),
+            ("Chicago", "Atlanta"),
+            ("Chicago", "MexicoCity"),
+            ("Chicago", "LosAngeles"),
+
+            ("Montreal", "NewYork"),
+            ("Montreal", "Washington"),
+
+            ("Atlanta","Washington"),
+
+            ("NewYork", "Washington"),
+            ("NewYork", "London"),
+            ("NewYork", "Madrid"),
+
+            ("London", "Madrid"),
+            ("London", "Paris"),
+            ("London", "Essen"),
+
+            ("Madrid", "Paris"),
+            ("Madrid", "Algiers"),
+            ("Madrid", "SaoPaulo"),
+
+            ("Paris", "Essen"),
+            ("Paris", "Milan"),
+            ("Paris", "Algiers"),
+
+            ("Essen", "Milan"),
+            ("Essen", "StPetersburg"),
+
+            ("Milan", "Istanbul"),
+
+            ("StPetersburg", "Moscow"),
+            ("StPetersburg", "Istanbul"),
+        };
+
+        foreach (var (city1, city2) in blueConnections)
+        {
+            AddBidirectionalConnection(city1, city2);
+        }
+    }
+
+    private void CreateYellowRegionConnections()
+    {
+        var yellowConnections = new (string, string)[]
+        {
+            //Yellow City Connections
+            ("LosAngeles", "MexicoCity"),
+            //("LosAngeles", "Sydney"),
+
+            ("MexicoCity", "Miami"),
+            ("MexicoCity", "Bogota"),
+
+            ("MexicoCity", "Lima"),
+
+            ("Miami", "Bogota"),
+            ("Miami", "Washington"),
+            ("Miami", "Atlanta"),
+
+            ("Bogota", "Lima"),
+            ("Bogota", "SaoPaulo"),
+
+            ("Lima", "Santiago"),
+
+            ("BuenosAires", "SaoPaulo"),
+            ("BuenosAires", "Bogota"),
+
+            ("SaoPaulo", "Lagos"),
+
+
+            ("Lagos", "Khartoum"),
+            ("Lagos", "Kinshasa"),
+
+            ("Kinshasa", "Khartoum"),
+            ("Kinshasa", "Johannesburg"),
+
+            ("Khartoum", "Cairo"),
+            ("Khartoum", "Johannesburg")
+        };
+
+        foreach (var (city1, city2) in yellowConnections)
+        {
+            AddBidirectionalConnection(city1, city2);
+        }
+    }
+
+    private void CreateBlackRegionConnections()
+    {
+        var blackConnections = new (string, string)[]
+        {
+            //Black City Ocnnections
+            ("Moscow", "Istanbul"),
+            ("Moscow", "Tehran"),
+
+            ("Istanbul", "Baghdad"),
+            ("Istanbul", "Cairo"),
+            ("Istanbul", "Algiers"),
+
+            ("Cairo", "Algiers"),
+            ("Cairo", "Baghdad"),
+            ("Cairo", "Khartoum"),
+            ("Cairo", "Riyadh"),
+
+            ("Baghdad", "Tehran"),
+            ("Baghdad", "Karachi"),
+            ("Baghdad", "Riyadh"),
+
+            ("Riyadh", "Karachi"),
+
+            ("Tehran", "Karachi"),
+            ("Tehran", "Delhi"),
+
+            ("Karachi", "Delhi"),
+            ("Karachi", "Mumbai"),
+
+            ("Mumbai", "Delhi"),
+            ("Mumbai", "Chennai"),
+
+            ("Delhi", "Chennai"),
+            ("Delhi", "Kolkata"),
+
+            ("Chennai", "Kolkata"),
+            ("Chennai", "Bangkok"),
+            ("Chennai", "Jakarta"),
+
+            ("Kolkata", "Bangkok"),
+            ("Kolkata", "HongKong")
+        };
+
+        foreach (var (city1, city2) in blackConnections)
+        {
+            AddBidirectionalConnection(city1, city2);
+        }
+    }
+
+    private void CreateRedRegionConnections()
+    {
+        var redConnections = new (string, string)[]
+        {
+            //Red City Connections
+            ("Beijing", "Seoul"),
+            ("Beijing", "Shanghai"),
+
+            ("Seoul", "Shanghai"),
+            ("Seoul", "Tokyo"),
+
+            ("Tokyo", "Shanghai"),
+            ("Tokyo", "Osaka"),
+
+            ("Shanghai", "Taipei"),
+            ("Shanghai", "HongKong"),
+
+            ("HongKong", "Taipei"),
+            ("HongKong", "Manila"),
+            ("HongKong", "HoChiMinhCity"),
+            ("HongKong", "Bangkok"),
+
+            ("Taipei", "Manila"),
+            ("Taipei", "Osaka"),
+
+            ("Bangkok", "HoChiMinhCity"),
+            ("Bangkok", "Jakarta"),
+
+            ("Jakarta", "HoChiMinhCity"),
+            ("Jakarta", "Sydney"),
+
+            ("HoChiMinhCity", "Manila"),
+
+            ("Manila", "Sydney")
+        };
+
+        foreach (var (city1, city2) in redConnections)
+        {
+            AddBidirectionalConnection(city1, city2);
+        }
+    }
+
+    private void ValidateConnections()
+    {
+        // Validate all cities have at least one connection
+        foreach (var city in cities.Values)
+        {
+            if (city.ConnectedCities.Count == 0)
+            {
+                GD.PrintErr($"Warning: City {city.Name} has no connections!");
+            }
+        }
+
+        // Validate bidirectional connections
+        foreach (var city in cities.Values)
+        {
+            foreach (var connectedCity in city.ConnectedCities)
+            {
+                if (!cities[connectedCity].ConnectedCities.Contains(city.Name))
+                {
+                    GD.PrintErr($"Warning: One-way connection detected: {city.Name} -> {connectedCity}");
+                }
+            }
+        }
+    }
+
+    // Helper method to get all cities connected to a specific city
+    public List<(string cityName, DiseaseType region)> GetConnectedCitiesWithRegions(string cityName)
+    {
+        if (!cities.TryGetValue(cityName, out var city))
+        {
+            return new List<(string, DiseaseType)>();
+        }
+
+        return city.ConnectedCities
+            .Where(connectedCity => cities.ContainsKey(connectedCity))
+            .Select(connectedCity => (connectedCity, cities[connectedCity].Region))
+            .ToList();
+    }
+
+    // Helper method to check if a path exists between two cities
+    public bool PathExists(string startCity, string targetCity, int maxSteps = 100)
+    {
+        if (!cities.ContainsKey(startCity) || !cities.ContainsKey(targetCity))
+            return false;
+
+        var visited = new HashSet<string>();
+        var queue = new Queue<(string city, int steps)>();
+        queue.Enqueue((startCity, 0));
+
+        while (queue.Count > 0)
+        {
+            var (currentCity, steps) = queue.Dequeue();
+            
+            if (steps > maxSteps) continue;
+            if (currentCity == targetCity) return true;
+            
+            if (!visited.Contains(currentCity))
+            {
+                visited.Add(currentCity);
+                foreach (var nextCity in cities[currentCity].ConnectedCities)
+                {
+                    if (!visited.Contains(nextCity))
+                    {
+                        queue.Enqueue((nextCity, steps + 1));
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }
