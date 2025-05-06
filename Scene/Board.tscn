@@ -248,10 +248,10 @@ script = ExtResource("12_hjdv6")
 [node name="BLUE_CARDS" type="CanvasGroup" parent="CardManager"]
 
 [node name="Atlanta" parent="CardManager/BLUE_CARDS" instance=ExtResource("13_8bvll")]
-position = Vector2(13, 587)
+position = Vector2(-447, 648)
 
 [node name="Chicago" parent="CardManager/BLUE_CARDS" instance=ExtResource("13_8bvll")]
-position = Vector2(412, 576)
+position = Vector2(174, 640)
 
 [node name="Essen" parent="CardManager/BLUE_CARDS" instance=ExtResource("13_8bvll")]
-position = Vector2(210, 582)
+position = Vector2(-140, 646)
