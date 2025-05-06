@@ -225,6 +225,7 @@ script = ExtResource("6_3qpmf")
 metadata/_edit_group_ = true
 
 [node name="TextureRect" type="TextureRect" parent="BoardCamera"]
+visible = false
 offset_left = -100.0
 offset_top = -100.0
 offset_right = 100.0
