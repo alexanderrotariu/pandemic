@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://0uihyqwt40ma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_csmgu"]
+size = Vector2(299.172, 419.222)
+
+[node name="Card" type="Node2D"]
+
+[node name="CardImage" type="Sprite2D" parent="."]
+position = Vector2(9.09495e-13, -9.53674e-07)
+scale = Vector2(0.52349, 0.52349)
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.524781, 0.524781)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -1.81728e-06)
+shape = SubResource("RectangleShape2D_csmgu")
