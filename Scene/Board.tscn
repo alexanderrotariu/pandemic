@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://0uihyqwt40ma" path="res://Scene/Card.tscn" id="13_8bvll"]
 
 [node name="Board" type="Node2D"]
+position = Vector2(1440, 809)
 script = ExtResource("1_jqn65")
 
 [node name="BLUE_CITIES" type="CanvasGroup" parent="."]

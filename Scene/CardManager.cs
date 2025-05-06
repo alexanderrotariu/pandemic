@@ -4,14 +4,69 @@ using System;
 public partial class CardManager : Node2D
 {
 	Node2D CardSelect = null;
+	// Store the initial click offset to maintain relative grab position
+	private Vector2 dragOffset = Vector2.Zero;
+	// Reference to the camera for coordinate transformations
+	private Camera2D boardCamera;
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		AssignCardSprites();
+
+		// Try to find the camera in the scene - needed for proper coordinate transforms
+		boardCamera = GetViewport().GetCamera2D();
+		if (boardCamera == null)
+		{
+			GD.Print("Warning: No Camera2D found in scene. Card constraints may not work correctly.");
+		}
+		else
+		{
+			GD.Print($"Camera found: {boardCamera.Name}, Position: {boardCamera.Position}, Zoom: {boardCamera.Zoom}");
+		}
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		if (CardSelect != null)
 		{
+			// Get current mouse position in global coordinates
 			var mousePosition = GetGlobalMousePosition();
-			CardSelect.Position = mousePosition;
+
+			// Apply the offset for natural dragging
+			CardSelect.GlobalPosition = mousePosition - dragOffset;
+
+			// If we need constraints to keep cards on screen:
+			if (boardCamera != null)
+			{
+				// Get visible area bounds in global coordinates
+				var viewport = GetViewport();
+				var viewportSize = viewport.GetVisibleRect().Size;
+				Vector2 cameraCenterPos = boardCamera.GetScreenCenterPosition();
+
+				// Calculate global bounds with zoom factor
+				float zoomFactor = boardCamera.Zoom.X; // Assuming uniform zoom
+				float halfWidthGlobal = (viewportSize.X / 2) / zoomFactor;
+				float halfHeightGlobal = (viewportSize.Y / 2) / zoomFactor;
+
+				// Calculate screen boundaries in global coordinates
+				float leftBound = cameraCenterPos.X - halfWidthGlobal;
+				float rightBound = cameraCenterPos.X + halfWidthGlobal;
+				float topBound = cameraCenterPos.Y - halfHeightGlobal;
+				float bottomBound = cameraCenterPos.Y + halfHeightGlobal;
+
+				// Get card dimensions for edge clamping
+				Vector2 cardSize = GetCardSize(CardSelect);
+				float cardHalfWidth = cardSize.X / 2;
+				float cardHalfHeight = cardSize.Y / 2;
+
+				// Apply constraints to keep card fully visible
+				CardSelect.GlobalPosition = new Vector2(
+					Mathf.Clamp(CardSelect.GlobalPosition.X, leftBound + cardHalfWidth, rightBound - cardHalfWidth),
+					Mathf.Clamp(CardSelect.GlobalPosition.Y, topBound + cardHalfHeight, bottomBound - cardHalfHeight)
+				);
+			}
 		}
 	}
 
@@ -23,7 +78,7 @@ public partial class CardManager : Node2D
 			{
 				// Try to get the card area
 				var cardArea = RaycastCheckForCard();
-				
+
 				// Only proceed if we found a card area
 				if (cardArea != null && IsNodeACard(cardArea))
 				{
@@ -32,6 +87,8 @@ public partial class CardManager : Node2D
 					if (card != null)
 					{
 						CardSelect = card;
+						// Calculate offset from mouse to card position for natural dragging
+						dragOffset = GetGlobalMousePosition() - card.GlobalPosition;
 					}
 				}
 			}
@@ -42,7 +99,7 @@ public partial class CardManager : Node2D
 			}
 		}
 	}
-	
+
 	// Helper method to check if the detected node is actually a card
 	private bool IsNodeACard(Node2D node)
 	{
@@ -53,6 +110,34 @@ public partial class CardManager : Node2D
 			return true;
 		}
 		return false;
+	}
+
+	// Helper method to determine card size
+	private Vector2 GetCardSize(Node2D card)
+	{
+		// Try to get size from sprite if available
+		var sprite = card.GetNodeOrNull<Sprite2D>("CardImage");
+		if (sprite != null && sprite.Texture != null)
+		{
+			return sprite.Texture.GetSize() * sprite.Scale;
+		}
+
+		// Fallback: Try to get size from collision shape
+		var area = card.GetNodeOrNull<Area2D>("Area2D");
+		if (area != null)
+		{
+			var collisionShape = area.GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
+			if (collisionShape != null && collisionShape.Shape != null)
+			{
+				if (collisionShape.Shape is RectangleShape2D rect)
+				{
+					return rect.Size * 2; // Size is half-extents in Godot
+				}
+			}
+		}
+
+		// Default fallback size if we can't determine the actual size
+		return new Vector2(100, 150); // Typical card dimensions
 	}
 
 	//Function that when you click on a card gets all the info.
@@ -127,11 +212,5 @@ public partial class CardManager : Node2D
 				}
 			}
 		}
-	}
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		AssignCardSprites();
 	}
 }
